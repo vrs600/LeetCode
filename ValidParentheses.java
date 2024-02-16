@@ -3,51 +3,59 @@ import java.util.Stack;
 public class ValidParentheses {
 
     public static void main(String[] args) {
-        String str = "[({})]()";
+        String str = "((";
         System.out.println("Is valid parentheses : " + isValid(str));
 
     }
 
     public static boolean isValid(String s) {
         boolean isValidParentheses = true;
-        Stack<String> stack = new Stack<>();
-        String[] list = s.split("");
-        for (String parentheses : list) {
-            if (parentheses.equals("(") || parentheses.equals("[") || parentheses.equals("{")) {
-                stack.push(parentheses);
-                continue;
-            }
+        if (s.length() == 1) {
+            isValidParentheses = false;
+        } else {
+            Stack<String> stack = new Stack<>();
+            String[] list = s.split("");
 
-            if (stack.isEmpty()) {
-                isValidParentheses = false;
-            } else {
-                String check = stack.pop();
-                switch (s) {
-                    case ")": {
-                        if (!check.equals("(")) {
-                            isValidParentheses = false;
-                        }
-                    }
-                    break;
-                    case "]": {
-                        if (!check.equals("[")) {
-                            isValidParentheses = false;
-                        }
-                    }
-                    break;
-                    case "}": {
-                        if (!check.equals("{")) {
-                            isValidParentheses = false;
-                        }
-                    }
-                    break;
+            for (String parentheses : list) {
+                if (parentheses.equals("(") || parentheses.equals("[") || parentheses.equals("{")) {
+                    stack.push(parentheses);
+                    continue;
                 }
-            }
-            if (!isValidParentheses) {
-                break;
-            }
-        }
 
+                if (stack.isEmpty()) {
+                    isValidParentheses = false;
+                } else {
+                    String check = stack.pop();
+                    switch (parentheses) {
+                        case ")": {
+                            if (!check.equals("(")) {
+                                isValidParentheses = false;
+                            }
+                        }
+                        break;
+                        case "]": {
+                            if (!check.equals("[")) {
+                                isValidParentheses = false;
+                            }
+                        }
+                        break;
+                        case "}": {
+                            if (!check.equals("{")) {
+                                isValidParentheses = false;
+                            }
+                        }
+                        break;
+                    }
+                }
+
+            }
+
+            if (!stack.isEmpty()) {
+                isValidParentheses = false;
+            }
+
+        }
         return isValidParentheses;
+
     }
 }
